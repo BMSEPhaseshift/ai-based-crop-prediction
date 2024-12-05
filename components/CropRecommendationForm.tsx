@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import RecommendationResult from "@/components/RecommendationResult";
+import RecommendationResult from "@/components/RecommendationResult"; // Updated import for default export
 import { InputField } from "@/components/form/InputField";
 import { SelectField } from "@/components/form/SelectField";
 import { soilTypes, states } from "@/lib/constants";

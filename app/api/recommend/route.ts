@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   try {
-    // Extract any necessary parameters from the request
-    const { searchParams } = new URL(request.url);
-    const data = Object.fromEntries(searchParams);
+    const data = await request.json();
 
-    // Call the external Python API with the data
     const response = await fetch("http://127.0.0.1:5000/predict", {
       method: "POST",
       headers: {
