@@ -18,24 +18,29 @@ export function CropRecommendationForm() {
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    const data = {
-      region: formData.get("region"),
-      temperature: Number(formData.get("temperature")),
-      rainfall: Number(formData.get("rainfall")),
-      humidity: Number(formData.get("humidity")),
-      soilType: formData.get("soilType"),
-      soilQualityIndex: Number(formData.get("soilQualityIndex")),
-    };
+
+    // Construct the input array in the required order
+    const inputArray = [
+      formData.get("region"),
+      Number(formData.get("temperature")),
+      Number(formData.get("humidity")),
+      Number(formData.get("rainfall")),
+      formData.get("soilType"),
+      Number(formData.get("soilQualityIndex")),
+    ];
+
+    const data = { input: inputArray }; // Wrap the array in an object with the key "input"
 
     try {
-      const response = await fetch("/api/recommend", {
+      const response = await fetch("http://127.0.0.1:5000/predict", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data), // Send data in the required format
       });
-
+      console.log(JSON.stringify(data)); // Log the sent data for debugging
       const result = await response.json();
-      setResult(result);
+      console.log(result); // Log the result after the API call
+      setResult(result); // Update state with the received recommendation
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -108,7 +113,8 @@ export function CropRecommendationForm() {
           </Button>
         </form>
       </Card>
-
+      
+      {/* Conditionally render the RecommendationResult component if result exists */}
       {result && <RecommendationResult recommendation={result} />}
     </div>
   );

@@ -26,7 +26,7 @@ export default function RecommendationResult({
       <h2 className="text-2xl font-bold text-gray-900 mb-4">
         Recommendation Results
       </h2>
-
+      
       <div className="space-y-6">
         {/* Recommended Crop Section */}
         <div className="flex items-center gap-4">
@@ -45,11 +45,13 @@ export default function RecommendationResult({
           <div className="flex justify-between mb-2">
             <span className="font-medium">Sustainability Score</span>
             <span className="text-green-600">
-              {recommendation.sustainabilityScore ?? 0}%
+              {recommendation.sustainabilityScore != null
+                ? recommendation.sustainabilityScore
+                : 0}%
             </span>
           </div>
           <Progress
-            value={recommendation.sustainabilityScore || 0}
+            value={recommendation.sustainabilityScore ?? 0}
             className="h-2"
           />
         </div>
